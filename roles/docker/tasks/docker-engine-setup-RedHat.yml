@@ -1,0 +1,24 @@
+---
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-common
+    - container-selinux
+    - docker-selinux
+    - docker-engine
+
+- name: Add Docker GPG key.
+  rpm_key:
+    key: "{{ docker_gpg_key }}"
+    state: present
+
+- name: Add Docker repository.
+  get_url:
+    url: "{{ docker_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
+    owner: root
+    group: root
+    mode: 0644

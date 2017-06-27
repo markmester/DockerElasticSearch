@@ -1,0 +1,31 @@
+---
+- name: Check set parameters
+  include: docker-parameters.yml
+  tags:
+      - always
+
+- name: Docker engine setup
+  include: docker-engine-setup-RedHat.yml
+  tags:
+    - setup
+
+- name: Install Docker
+  package: name={{ docker_package }} state=present
+  tags:
+    - install
+
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install Docker Compose
+  include: docker-compose.yml
+  when: docker_install_compose
+  tags:
+    - install
+
+- name: Initalize swarm
+  include: docker-swarm.yml
+  when: docker_initialize_swarm

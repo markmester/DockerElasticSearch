@@ -1,0 +1,25 @@
+# Check for mandatory parameters
+
+- fail: msg="docker_edition must be either ce or ee"
+  when: docker_edition is not defined or docker_edition == ''
+
+- fail: msg="docker_install_compose must be defined as true or false"
+  when: docker_install_compose is not defined or docker_install_compose == ''
+
+- fail: msg="docker_compose_version must be defined"
+  when: docker_compose_version is not defined or docker_compose_version == ''
+
+- fail: msg="docker_compose_path must be defined"
+  when: docker_compose_path is not defined or docker_compose_path == ''
+
+- fail: msg="docker_yum_repo_url must be defined"
+  when: docker_yum_repo_url is not defined or docker_yum_repo_url == ''
+
+- fail: msg="docker_gpg_key must be defined"
+  when: docker_gpg_key is not defined or docker_gpg_key == ''
+
+- fail: msg="docker_initialize_swarm must be defined"
+  when: docker_initialize_swarm is not defined or docker_initialize_swarm == ''
+
+- fail: msg="swarm_iface must be defined"
+  when: swarm_iface is not defined or swarm_iface == ''
